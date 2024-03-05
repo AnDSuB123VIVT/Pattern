@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+class ITarget { … // интерфейс, который использует main
+};
+class IndependentClass { … // адаптируемый класс
+};
+class Adapter : public ITarget { … // адаптер, реализующий интерфейс
+ // ITarget
+};
+int main() {
+ ITarget *trg = new Adapter();
+ cout << "Random is: " << trg->functFromITarget() << endl;
+return 0;
+}
+class ITarget { // интерфейс, который использует main
+public:
+ virtual int getRandomNumber() = 0;
+};
+class IndependentClass { // адаптируемый класс, не реализующий ITarget
+public:
+ int random() { return 4; }
+};
+class Adapter : public ITarget { // адаптер, реализубщий интерфейс ITarget
+private:
+ IndependentClass *adp;
+public:
+ int getRandomNumber() { cout<< "Call random() \n";
+ return adp->random(); }
+ Adapter() { adp = new IndependentClass(); }
+ ~Adapter() { delete adp; }
+};
